@@ -1,12 +1,13 @@
 import sqlite3
+import sys
 from PyQt5 import uic
-from PyQt5.QtWidgets import QWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QWidget, QTableWidgetItem, QApplication
 
 
 class Programm(QWidget):
     def __init__(self):
         super(Programm, self).__init__()
-        uic.loadUI('main.ui', self)
+        uic.loadUi('main.ui', self)
         con = sqlite3.connect('coffee.sqlite')
         cur = con.cursor()
         result = cur.execute('SELECT * FROM coffee').fetchall()
@@ -22,3 +23,8 @@ class Programm(QWidget):
                     i, j, QTableWidgetItem(str(elem)))
 
 
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = Programm()
+    ex.show()
+    sys.exit(app.exec())
